@@ -1,8 +1,12 @@
 package com.example.cheureele
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
+import android.os.SystemClock
 import android.util.Log
 import android.widget.RemoteViews
 import java.time.LocalTime
@@ -12,15 +16,42 @@ import java.time.format.DateTimeFormatter
  * Implementation of App Widget functionality.
  */
 class YourWidgetProvider : AppWidgetProvider() {
+    companion object {
+        const val ACTION_UPDATE_WIDGET = "com.example.cheureele.ACTION_UPDATE_WIDGET"
+    }
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
         Log.d("widget","onUpdate chiamata")
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+
+        val alarmIntent = Intent(context, YourWidgetProvider::class.java).apply {
+            action = ACTION_UPDATE_WIDGET
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val interval: Long = 10000
+
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval, interval, pendingIntent)
+
         // Itera su tutti i widget istanziati
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
+    }
+
+    override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
+
+        if (intent?.action == ACTION_UPDATE_WIDGET) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
+            appWidgetIds?.let { onUpdate(context!!, appWidgetManager, it) }
         }
     }
 
@@ -30,6 +61,18 @@ class YourWidgetProvider : AppWidgetProvider() {
 
     override fun onDisabled(context: Context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
+        super.onDeleted(context, appWidgetIds)
+
+        val alarmIntent = Intent(context, YourWidgetProvider::class.java).apply {
+            action = ACTION_UPDATE_WIDGET
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
     }
 }
 

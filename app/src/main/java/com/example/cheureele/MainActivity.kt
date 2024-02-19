@@ -1,6 +1,10 @@
 package com.example.cheureele
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +30,19 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        updateWidgets()
+    }
+    private fun updateWidgets() {
+        Log.d("Main","updateWidgets() chiamata")
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        val thisWidget = ComponentName(this, YourWidgetProvider::class.java)
+        val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+
+        // Il tuo AppWidgetProvider ha bisogno di gestire l'intent ACTION_APPWIDGET_UPDATE
+        val intent = Intent(this, YourWidgetProvider::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds)
+        sendBroadcast(intent)
     }
 }
 
