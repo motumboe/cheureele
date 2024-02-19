@@ -3,7 +3,10 @@ package com.example.cheureele
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.util.Log
 import android.widget.RemoteViews
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Implementation of App Widget functionality.
@@ -14,7 +17,8 @@ class YourWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        // There may be multiple widgets active, so update all of them
+        Log.d("widget","onUpdate chiamata")
+        // Itera su tutti i widget istanziati
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
@@ -29,12 +33,19 @@ class YourWidgetProvider : AppWidgetProvider() {
     }
 }
 
+fun getTimeText(): String {
+    val currentTime = LocalTime.now()
+    // Qui puoi implementare la tua logica per convertire l'ora in formato testuale
+    // Per semplicità, userò HH:mm, ma puoi personalizzarlo come preferisci
+    return currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+}
+
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val widgetText = context.getString(R.string.appwidget_text)
+    val widgetText = getTimeText() // La tua funzione per ottenere l'ora in formato testuale
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.your_widget_provider)
     views.setTextViewText(R.id.appwidget_text, widgetText)
