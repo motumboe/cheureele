@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.RemoteViews
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 /**
  * Implementation of App Widget functionality.
@@ -35,7 +36,7 @@ class YourWidgetProvider : AppWidgetProvider() {
         val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val interval: Long = 10000
+        val interval: Long = 300000
 
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval, interval, pendingIntent)
 
@@ -77,10 +78,66 @@ class YourWidgetProvider : AppWidgetProvider() {
 }
 
 fun getTimeText(): String {
-    val currentTime = LocalTime.now()
+    val testo = arrayOf(
+        "mezanòt", "mezanòt e un quart", "mezanòt e meza", "un quart a un bòt",
+
+        "un bòt", "un bòt e un quart", "un bòt e mès", "un quart a le dò",
+
+        "le dò", "le dò e un quart", "le dò e meza", "un quart a le trè",
+
+        "le trè", "le trè e un quart", "le trè e meza", "un quart a le quater",
+
+        "le quater", "le quater e un quart", "le quater e meza", "un quart a le sic",
+
+        "le sic", "le sic e un quart", "le sic e meza", "un quart a le sés",
+
+        "le sés", "le sés e un quart", "le sés e meza", "un quart a le sèt",
+
+        "le sét", "le sét e un quart", "le sét e meza", "un quart a le òt",
+
+        "le òt", "le òt e un quart", "le òt e meza", "un quart a le nöf",
+
+        "le nöf", "le nöf e un quart", "le nöf e meza", "un quart a le dés",
+
+        "le dés", "le dés e un quart", "le dés e meza", "un quart a le öndès",
+
+        "le öndès", "le öndès e un quart", "le öndès e meza", "un quart a mezdé",
+
+        "mezdé", "mezdé e un quart", "mezdé e mès", "un quart a un bòt",
+
+        "un bòt", "un bòt e un quart", "un bòt e mès", "un quart a le dò",
+
+        "le dò", "le dò e un quart", "le dò e meza", "un quart a le trè",
+
+        "le trè", "le trè e un quart", "le trè e meza", "un quart a le quater",
+
+        "le quater", "le quater e un quart", "le quater e meza", "un quart a le sic",
+
+        "le sic", "le sic e un quart", "le sic e meza", "un quart a le sés",
+
+        "le sés", "le sés e un quart", "le sés e meza", "un quart a le sèt",
+
+        "le sét", "le sét e un quart", "le sét e meza", "un quart a le òt",
+
+        "le òt", "le òt e un quart", "le òt e meza", "un quart a le nöf",
+
+        "le nöf", "le nöf e un quart", "le nöf e meza", "un quart a le dés",
+
+        "le dés", "le dés e un quart", "le dés e meza", "un quart a le öndès",
+
+        "le öndès", "le öndès e un quart", "le öndès e meza", "un quart a mezanòt",
+
+        "mezanòt"
+    )
+    val now = LocalTime.now()
+    val midnight = LocalTime.MIDNIGHT
+    val diff = ChronoUnit.SECONDS.between(midnight, now)
+    return testo[(((diff+450) / 900).toInt()) % testo.size]
+
+//    val currentTime = LocalTime.now()
     // Qui puoi implementare la tua logica per convertire l'ora in formato testuale
     // Per semplicità, userò HH:mm, ma puoi personalizzarlo come preferisci
-    return currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+//    return currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
 }
 
 internal fun updateAppWidget(
