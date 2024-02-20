@@ -5,15 +5,32 @@
     android:theme="@style/Theme.CheUreEle.AppWidgetContainer">
 
     <TextView
+        android:id="@+id/numeric_time_text"
+        style="@style/Widget.CheUreEle.AppWidget.InnerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="1dp"
+        android:textSize="100sp"
+        android:textStyle="normal"
+        android:fontFamily="@font/roboto_thin"
+        android:letterSpacing="0.01"
+        android:text="12:00"
+    />
+
+    <TextView
         android:id="@+id/appwidget_text"
         style="@style/Widget.CheUreEle.AppWidget.InnerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
+        android:layout_below="@id/numeric_time_text"
+        android:layout_margin="2dp"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
         android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="normal"
+        android:fontFamily="@font/roboto_thin"
+        />
 </RelativeLayout>
