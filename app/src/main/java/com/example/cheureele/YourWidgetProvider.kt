@@ -36,7 +36,7 @@ class YourWidgetProvider : AppWidgetProvider() {
         val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val interval: Long = 300000
+        val interval: Long = 10000
 
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval, interval, pendingIntent)
 
@@ -140,15 +140,23 @@ fun getTimeText(): String {
 //    return currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
 }
 
+fun getTimeNumber(): String {
+    val now = LocalTime.now()
+    return now.format(DateTimeFormatter.ofPattern("HH:mm"))
+}
+
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
     val widgetText = getTimeText() // La tua funzione per ottenere l'ora in formato testuale
+    val numericTime =  getTimeNumber()
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.your_widget_provider)
     views.setTextViewText(R.id.appwidget_text, widgetText)
+    views.setTextViewText(R.id.numeric_time_text, numericTime)
+
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
