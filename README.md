@@ -2,7 +2,7 @@
 
 CheUreEle e una piccola app Android con widget homescreen che mostra l'ora in forma numerica e in forma testuale dialettale.
 
-Il repository e ancora vicino a uno scaffold iniziale Android Studio: il widget contiene la logica principale gia attiva, mentre la schermata dell'app e ancora minimale.
+Il repository resta leggero, ma ora ha una schermata principale utile: mostra un'anteprima dell'ora corrente, spiega come usare il widget e permette un refresh immediato.
 
 ## Stack
 
@@ -32,19 +32,10 @@ sdk.dir=/percorso/alla/tua/Android/Sdk
 
 2. oppure esportare `ANDROID_HOME` o `ANDROID_SDK_ROOT`
 
-Nota pratica: nel repository attuale `gradlew` non ha il bit eseguibile, quindi su Unix il comando standard `./gradlew ...` fallisce con `Permission denied`.
-
-Fino a quando non viene corretto nel repo, usa:
-
-```bash
-bash ./gradlew <task>
-```
-
-oppure imposta il bit eseguibile solo in locale:
+Se dopo una copia manuale del repository `gradlew` perde il bit eseguibile, ripristinalo con:
 
 ```bash
 chmod +x gradlew
-./gradlew <task>
 ```
 
 ## Comandi utili
@@ -52,19 +43,19 @@ chmod +x gradlew
 Test unitari:
 
 ```bash
-bash ./gradlew test
+./gradlew test
 ```
 
 Build APK debug:
 
 ```bash
-bash ./gradlew assembleDebug
+./gradlew assembleDebug
 ```
 
 Installazione rapida su device collegato:
 
 ```bash
-bash ./gradlew installDebug
+./gradlew installDebug
 ```
 
 ## Struttura essenziale
@@ -86,15 +77,15 @@ bash ./gradlew installDebug
 ## Stato attuale
 
 - Il widget mostra ora numerica e ora testuale.
-- L'aggiornamento del widget passa da `AlarmManager`.
-- La schermata principale dell'app mostra ancora il placeholder Compose iniziale.
-- I test presenti nel repository sono solo quelli generati dal template Android Studio.
+- L'aggiornamento del widget passa da `AlarmManager` con schedulazione al minuto successivo.
+- La schermata principale mostra anteprima, istruzioni rapide e un pulsante per forzare il refresh del widget.
+- Il repository include test unitari reali sulla formattazione dell'ora.
 
 ## Verifica eseguita su questa macchina
 
 Ho provato a lanciare:
 
-- `bash ./gradlew test`
-- `bash ./gradlew assembleDebug`
+- `./gradlew test`
+- `./gradlew assembleDebug`
 
 Entrambi falliscono al momento per assenza di configurazione SDK Android locale (`local.properties`, `ANDROID_HOME` o `ANDROID_SDK_ROOT`).

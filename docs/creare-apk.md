@@ -11,7 +11,7 @@ Questa guida copre i casi pratici piu semplici per generare un APK di `CheUreEle
 Se `./gradlew` non e eseguibile nel clone corrente, usa:
 
 ```bash
-bash ./gradlew <task>
+chmod +x gradlew
 ```
 
 ## Build debug
@@ -19,7 +19,7 @@ bash ./gradlew <task>
 Per generare un APK debug:
 
 ```bash
-bash ./gradlew assembleDebug
+./gradlew assembleDebug
 ```
 
 Output atteso:
@@ -31,7 +31,7 @@ app/build/outputs/apk/debug/app-debug.apk
 Per installarlo su un device collegato:
 
 ```bash
-bash ./gradlew installDebug
+./gradlew installDebug
 ```
 
 ## Build release
@@ -39,7 +39,7 @@ bash ./gradlew installDebug
 Per generare una build release non firmata:
 
 ```bash
-bash ./gradlew assembleRelease
+./gradlew assembleRelease
 ```
 
 Output atteso:
@@ -84,14 +84,14 @@ Le password non vanno committate: meglio `~/.gradle/gradle.properties`, variabil
 ## Verifiche consigliate prima di usare un APK
 
 ```bash
-bash ./gradlew test
-bash ./gradlew assembleDebug
+./gradlew test
+./gradlew assembleDebug
 ```
 
 Se vuoi preparare una release piu seria, aggiungi anche:
 
 ```bash
-bash ./gradlew assembleRelease
+./gradlew assembleRelease
 ```
 
 ## Problemi comuni
@@ -103,8 +103,7 @@ bash ./gradlew assembleRelease
 
 `Permission denied` su `./gradlew`
 
-- usa `bash ./gradlew ...`
-- oppure fai `chmod +x gradlew`
+- fai `chmod +x gradlew`
 
 `assembleRelease` produce un APK non installabile come release finale
 

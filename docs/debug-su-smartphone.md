@@ -21,10 +21,10 @@ export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
 ```
 
-Se `./gradlew` fallisce con `Permission denied`, usa:
+Se `./gradlew` fallisce con `Permission denied`, ripristina il bit eseguibile:
 
 ```bash
-bash ./gradlew <task>
+chmod +x gradlew
 ```
 
 ## Abilitare il debug USB
@@ -49,7 +49,7 @@ Il device deve comparire come `device`, non come `unauthorized`.
 Da terminale:
 
 ```bash
-bash ./gradlew installDebug
+./gradlew installDebug
 ```
 
 In alternativa, da Android Studio:
@@ -68,7 +68,7 @@ Dopo l'installazione:
 3. aggiungi il widget `CheUreEle`
 4. osserva se l'ora numerica e quella testuale vengono aggiornate
 
-Nel codice attuale, aprire `MainActivity` forza anche un broadcast di aggiornamento del widget, quindi e un modo semplice per provocare un refresh mentre stai facendo debug.
+Nel codice attuale, aprire `MainActivity` forza anche un broadcast di aggiornamento del widget e mostra un pulsante `Aggiorna widget ora`, quindi hai due modi rapidi per provocare un refresh mentre stai facendo debug.
 
 ## Log utili
 
@@ -106,8 +106,8 @@ Questi due comandi sono utili per capire se il widget e registrato correttamente
 
 `Permission denied` su `./gradlew`
 
-- il file `gradlew` nel repo non e eseguibile
-- usa `bash ./gradlew ...` oppure `chmod +x gradlew`
+- il file ha perso il bit eseguibile sul filesystem locale
+- ripristinalo con `chmod +x gradlew`
 
 Il telefono non compare in `adb devices`
 
