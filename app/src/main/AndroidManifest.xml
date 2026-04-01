@@ -18,7 +18,7 @@
         <receiver
             android:name=".YourWidgetProvider"
             android:exported="false"
-            android:label="Widget di Ora Testuale">
+            android:label="@string/widget_provider_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
