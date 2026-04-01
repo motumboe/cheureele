@@ -5,10 +5,10 @@
     <string name="app_widget_description">Widget delle ure</string>
     <string name="widget_provider_label">Widget delle ure</string>
     <string name="main_title">CheUreEle</string>
-    <string name="main_subtitle">Un widget homescreen che mostra l'ora numerica e la resa testuale dialettale, con refresh automatico ogni minuto.</string>
+    <string name="main_subtitle">Un widget homescreen che mostra ora numerica e la resa testuale dialettale, con refresh automatico ogni minuto.</string>
     <string name="main_preview_title">Anteprima attuale</string>
     <string name="main_refresh_button">Aggiorna widget ora</string>
-    <string name="main_refresh_hint">Aprire l'app forza subito un aggiornamento del widget installato sulla home.</string>
+    <string name="main_refresh_hint">Aprire questa app forza subito un aggiornamento del widget installato sulla home.</string>
     <string name="main_usage_title">Come usarlo</string>
-    <string name="main_usage_steps">1. Aggiungi il widget dalla schermata Home.\n2. Ridimensionalo se vuoi piu respiro per il testo.\n3. Apri l'app quando vuoi forzare un refresh immediato.</string>
+    <string name="main_usage_steps">1. Aggiungi il widget dalla schermata Home.\n2. Ridimensionalo se vuoi piu respiro per il testo.\n3. Apri questa app quando vuoi forzare un refresh immediato.</string>
 </resources>
