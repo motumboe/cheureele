@@ -75,7 +75,7 @@ Nel codice attuale, aprire `MainActivity` forza anche un broadcast di aggiorname
 Logcat filtrato dai tag gia presenti:
 
 ```bash
-adb logcat | grep -E 'widget|Main'
+adb logcat | grep -E 'widget'
 ```
 
 Se usi Android Studio, apri `Logcat` e filtra per package `com.example.cheureele`.
