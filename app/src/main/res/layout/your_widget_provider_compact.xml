@@ -19,6 +19,6 @@
         android:maxLines="3"
         android:text="@string/appwidget_text"
         android:textAlignment="center"
-        android:textSize="14sp"
+        android:textSize="17sp"
         android:textStyle="normal" />
 </FrameLayout>

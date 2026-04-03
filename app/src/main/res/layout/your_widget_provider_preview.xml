@@ -39,7 +39,7 @@
             android:maxLines="1"
             android:text="le sét e meza"
             android:textAlignment="center"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:textStyle="normal" />
     </LinearLayout>
 </FrameLayout>
