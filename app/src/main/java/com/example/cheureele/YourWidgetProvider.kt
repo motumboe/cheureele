@@ -137,7 +137,7 @@ private fun createRemoteViews(
         context.packageName,
         R.layout.your_widget_provider_mini
     ).apply {
-        setTextViewText(R.id.numeric_time_text, getMiniTimeNumber(currentTime))
+        setTextViewText(R.id.appwidget_text, getMiniTimeText(currentTime))
     }
 
     WidgetLayoutMode.COMPACT -> RemoteViews(

@@ -1,7 +1,6 @@
 package com.example.cheureele
 
 import java.time.LocalTime
-import java.util.Locale
 
 private const val MINI_WIDGET_MAX_WIDTH_DP = 74
 private const val MINI_WIDGET_MAX_HEIGHT_DP = 74
@@ -24,5 +23,7 @@ fun resolveWidgetLayoutMode(minWidthDp: Int, minHeightDp: Int): WidgetLayoutMode
     else -> WidgetLayoutMode.FULL
 }
 
-fun getMiniTimeNumber(time: LocalTime = LocalTime.now()): String =
-    String.format(Locale.ROOT, "%02d\n%02d", time.hour, time.minute)
+fun getMiniTimeText(time: LocalTime = LocalTime.now()): String =
+    getTimeText(time)
+        .replace(" e ", "\ne ")
+        .replace(" a ", "\na ")

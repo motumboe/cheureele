@@ -31,8 +31,8 @@ class TimeTextFormatterTest {
     }
 
     @Test
-    fun `formatta la versione mini su due righe`() {
-        assertEquals("06\n05", getMiniTimeNumber(LocalTime.of(6, 5)))
+    fun `formatta la versione mini in solo testo su piu righe`() {
+        assertEquals("mezanòt\ne un quart", getMiniTimeText(LocalTime.of(0, 15)))
     }
 
     @Test

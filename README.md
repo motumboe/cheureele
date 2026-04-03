@@ -72,6 +72,7 @@ Installazione rapida su device collegato:
 
 - Il widget mostra ora numerica e ora testuale.
 - Il widget passa automaticamente a una resa compatta o mini quando viene ridotto fino a occupare celle molto piccole della home.
+- In modalita mini mostra solo la resa testuale, per preservare il lato giocoso del widget anche in 1x1.
 - L aggiornamento del widget passa da AlarmManager con schedulazione al minuto successivo.
 - La schermata principale mostra anteprima, istruzioni rapide e un pulsante per forzare il refresh del widget.
 - Il repository include test unitari reali sulla formattazione dell ora e sulla selezione del layout widget.
