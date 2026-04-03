@@ -66,7 +66,7 @@ Dopo l'installazione:
 1. apri l'app almeno una volta
 2. torna alla home
 3. aggiungi il widget `CheUreEle`
-4. osserva se l'ora numerica e quella testuale vengono aggiornate
+4. osserva se il widget mostra la resa corretta per la dimensione: numerica piu testuale da grande, solo testuale quando e ridotto
 
 Nel codice attuale, aprire `MainActivity` forza anche un broadcast di aggiornamento del widget e mostra un pulsante `Aggiorna widget ora`, quindi hai due modi rapidi per provocare un refresh mentre stai facendo debug.
 

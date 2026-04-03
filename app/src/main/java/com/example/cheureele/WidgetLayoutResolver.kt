@@ -23,7 +23,9 @@ fun resolveWidgetLayoutMode(minWidthDp: Int, minHeightDp: Int): WidgetLayoutMode
     else -> WidgetLayoutMode.FULL
 }
 
-fun getMiniTimeText(time: LocalTime = LocalTime.now()): String =
+fun getCompactTimeText(time: LocalTime = LocalTime.now()): String =
     getTimeText(time)
         .replace(" e ", "\ne ")
         .replace(" a ", "\na ")
+
+fun getMiniTimeText(time: LocalTime = LocalTime.now()): String = getCompactTimeText(time)
