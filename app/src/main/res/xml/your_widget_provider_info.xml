@@ -5,6 +5,8 @@
     android:initialLayout="@layout/your_widget_provider"
     android:minWidth="180dp"
     android:minHeight="96dp"
+    android:minResizeWidth="56dp"
+    android:minResizeHeight="56dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:previewLayout="@layout/your_widget_provider"
     android:resizeMode="horizontal|vertical"

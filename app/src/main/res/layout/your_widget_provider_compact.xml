@@ -1,0 +1,23 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.CheUreEle.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:minWidth="0dp"
+    android:minHeight="0dp"
+    android:padding="8dp"
+    android:theme="@style/Theme.CheUreEle.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/numeric_time_text"
+        style="@style/Widget.CheUreEle.AppWidget.InnerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_thin"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="12:00"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="normal" />
+</FrameLayout>

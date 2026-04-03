@@ -31,11 +31,31 @@ class TimeTextFormatterTest {
     }
 
     @Test
+    fun `formatta la versione mini su due righe`() {
+        assertEquals("06\n05", getMiniTimeNumber(LocalTime.of(6, 5)))
+    }
+
+    @Test
     fun `calcola il prossimo trigger al minuto successivo`() {
         val zoneId = ZoneId.of("Europe/Rome")
         val currentTime = Instant.parse("2026-04-01T10:34:27Z").toEpochMilli()
         val expectedTrigger = Instant.parse("2026-04-01T10:35:00Z").toEpochMilli()
 
         assertEquals(expectedTrigger, getNextMinuteTriggerAt(currentTime, zoneId))
+    }
+
+    @Test
+    fun `usa il layout mini quando lo spazio e quello di una cella`() {
+        assertEquals(WidgetLayoutMode.MINI, resolveWidgetLayoutMode(56, 56))
+    }
+
+    @Test
+    fun `usa il layout compatto in spazi intermedi`() {
+        assertEquals(WidgetLayoutMode.COMPACT, resolveWidgetLayoutMode(120, 84))
+    }
+
+    @Test
+    fun `usa il layout completo quando c e spazio sufficiente`() {
+        assertEquals(WidgetLayoutMode.FULL, resolveWidgetLayoutMode(180, 96))
     }
 }

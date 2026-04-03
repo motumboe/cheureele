@@ -7,8 +7,13 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
+import java.time.LocalTime
+
+private const val DEFAULT_FULL_WIDGET_WIDTH_DP = 180
+private const val DEFAULT_FULL_WIDGET_HEIGHT_DP = 96
 
 class YourWidgetProvider : AppWidgetProvider() {
     companion object {
@@ -86,6 +91,16 @@ class YourWidgetProvider : AppWidgetProvider() {
         scheduleNextUpdate(context)
     }
 
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
+        updateAppWidget(context, appWidgetManager, appWidgetId)
+        scheduleNextUpdate(context)
+    }
+
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_UPDATE_WIDGET,
@@ -113,16 +128,73 @@ class YourWidgetProvider : AppWidgetProvider() {
     }
 }
 
+private fun createRemoteViews(
+    context: Context,
+    layoutMode: WidgetLayoutMode,
+    currentTime: LocalTime
+): RemoteViews = when (layoutMode) {
+    WidgetLayoutMode.MINI -> RemoteViews(
+        context.packageName,
+        R.layout.your_widget_provider_mini
+    ).apply {
+        setTextViewText(R.id.numeric_time_text, getMiniTimeNumber(currentTime))
+    }
+
+    WidgetLayoutMode.COMPACT -> RemoteViews(
+        context.packageName,
+        R.layout.your_widget_provider_compact
+    ).apply {
+        setTextViewText(R.id.numeric_time_text, getTimeNumber(currentTime))
+    }
+
+    WidgetLayoutMode.FULL -> RemoteViews(
+        context.packageName,
+        R.layout.your_widget_provider
+    ).apply {
+        setTextViewText(R.id.numeric_time_text, getTimeNumber(currentTime))
+        setTextViewText(R.id.appwidget_text, getTimeText(currentTime))
+    }
+}
+
+private fun resolveWidgetLayoutMode(
+    appWidgetManager: AppWidgetManager,
+    appWidgetId: Int
+): WidgetLayoutMode {
+    val widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId)
+    val widgetWidthDp = widgetOptions.getInt(
+        AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH,
+        DEFAULT_FULL_WIDGET_WIDTH_DP
+    )
+    val widgetHeightDp = widgetOptions.getInt(
+        AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT,
+        DEFAULT_FULL_WIDGET_HEIGHT_DP
+    )
+
+    return resolveWidgetLayoutMode(widgetWidthDp, widgetHeightDp)
+}
+
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val widgetText = getTimeText()
-    val numericTime = getTimeNumber()
-    val views = RemoteViews(context.packageName, R.layout.your_widget_provider)
-    views.setTextViewText(R.id.appwidget_text, widgetText)
-    views.setTextViewText(R.id.numeric_time_text, numericTime)
+    val widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId)
+    val widgetWidthDp = widgetOptions.getInt(
+        AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH,
+        DEFAULT_FULL_WIDGET_WIDTH_DP
+    )
+    val widgetHeightDp = widgetOptions.getInt(
+        AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT,
+        DEFAULT_FULL_WIDGET_HEIGHT_DP
+    )
+    val layoutMode = resolveWidgetLayoutMode(appWidgetManager, appWidgetId)
+    val currentTime = LocalTime.now()
+    val views = createRemoteViews(context, layoutMode, currentTime)
+
+    Log.d(
+        "widget",
+        "Aggiorna widget $appWidgetId in modalita $layoutMode (${widgetWidthDp}x${widgetHeightDp}dp)"
+    )
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
