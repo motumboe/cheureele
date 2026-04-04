@@ -10,12 +10,16 @@ private const val COMPACT_WIDGET_MAX_HEIGHT_DP = 92
 enum class WidgetLayoutMode {
     MINI,
     COMPACT,
+    WIDE,
     FULL
 }
 
 fun resolveWidgetLayoutMode(minWidthDp: Int, minHeightDp: Int): WidgetLayoutMode = when {
-    minWidthDp <= MINI_WIDGET_MAX_WIDTH_DP || minHeightDp <= MINI_WIDGET_MAX_HEIGHT_DP ->
+    minWidthDp <= MINI_WIDGET_MAX_WIDTH_DP && minHeightDp <= MINI_WIDGET_MAX_HEIGHT_DP ->
         WidgetLayoutMode.MINI
+
+    minWidthDp > COMPACT_WIDGET_MAX_WIDTH_DP && minHeightDp <= COMPACT_WIDGET_MAX_HEIGHT_DP ->
+        WidgetLayoutMode.WIDE
 
     minWidthDp <= COMPACT_WIDGET_MAX_WIDTH_DP || minHeightDp <= COMPACT_WIDGET_MAX_HEIGHT_DP ->
         WidgetLayoutMode.COMPACT

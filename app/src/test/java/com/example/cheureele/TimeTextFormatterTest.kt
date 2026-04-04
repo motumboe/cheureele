@@ -60,6 +60,11 @@ class TimeTextFormatterTest {
     }
 
     @Test
+    fun `usa il layout wide quando il widget e largo ma basso`() {
+        assertEquals(WidgetLayoutMode.WIDE, resolveWidgetLayoutMode(180, 56))
+    }
+
+    @Test
     fun `usa il layout completo quando c e spazio sufficiente`() {
         assertEquals(WidgetLayoutMode.FULL, resolveWidgetLayoutMode(180, 96))
     }

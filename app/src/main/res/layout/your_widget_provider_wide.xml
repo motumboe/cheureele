@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.CheUreEle.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:gravity="center_vertical"
+    android:minWidth="0dp"
+    android:minHeight="0dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp"
+    android:theme="@style/Theme.CheUreEle.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/numeric_time_text"
+        style="@style/Widget.CheUreEle.AppWidget.InnerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_thin"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.01"
+        android:text="12:00"
+        android:textSize="28sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        style="@style/Widget.CheUreEle.AppWidget.InnerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_thin"
+        android:gravity="start|center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:text="@string/appwidget_text"
+        android:textAlignment="viewStart"
+        android:textSize="21sp"
+        android:textStyle="normal" />
+</LinearLayout>
