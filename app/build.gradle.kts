@@ -1,7 +1,34 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.inputStream().use(keystoreProperties::load)
+}
+
+fun getReleaseSigningValue(name: String): String? =
+    keystoreProperties.getProperty(name)
+        ?: providers.environmentVariable(name).orNull
+
+val releaseStoreFilePath = getReleaseSigningValue("RELEASE_STORE_FILE")
+val releaseStoreFile =
+    releaseStoreFilePath
+        ?.takeIf(String::isNotBlank)
+        ?.let(rootProject::file)
+val releaseStorePassword = getReleaseSigningValue("RELEASE_STORE_PASSWORD")
+val releaseKeyAlias = getReleaseSigningValue("RELEASE_KEY_ALIAS")
+val releaseKeyPassword = getReleaseSigningValue("RELEASE_KEY_PASSWORD")
+val hasReleaseSigning =
+    releaseStoreFile?.exists() == true &&
+        !releaseStorePassword.isNullOrBlank() &&
+        !releaseKeyAlias.isNullOrBlank() &&
+        !releaseKeyPassword.isNullOrBlank()
 
 android {
     namespace = "com.example.cheureele"
@@ -20,8 +47,22 @@ android {
         }
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = releaseStoreFile
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

@@ -32,7 +32,7 @@ class TimeTextFormatterTest {
 
     @Test
     fun `formatta la versione compatta in solo testo su piu righe`() {
-        assertEquals("le sét\ne meza", getCompactTimeText(LocalTime.of(7, 30)))
+        assertEquals("le sèt\ne meza", getCompactTimeText(LocalTime.of(7, 30)))
     }
 
     @Test

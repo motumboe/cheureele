@@ -48,6 +48,10 @@ Installazione rapida su device collegato:
 
     ./gradlew installDebug
 
+Build release firmata, se hai configurato `keystore.properties` locale o le variabili ambiente di signing:
+
+    ./gradlew assembleRelease
+
 ## Struttura essenziale
 
 - app/src/main/java/com/example/cheureele/MainActivity.kt

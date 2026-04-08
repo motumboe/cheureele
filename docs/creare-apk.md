@@ -1,12 +1,13 @@
 # Creare Un APK
 
-Questa guida copre i casi pratici piu semplici per generare un APK di `CheUreEle`.
+Questa guida copre i casi pratici per generare APK debug e release di `CheUreEle`.
 
 ## Prerequisiti
 
 - SDK Android configurata
 - JDK compatibile
 - Gradle wrapper funzionante
+- `adb` disponibile se vuoi installare da terminale
 
 Se `./gradlew` non e eseguibile nel clone corrente, usa:
 
@@ -22,7 +23,7 @@ Per generare un APK debug:
 ./gradlew assembleDebug
 ```
 
-Output atteso:
+Output:
 
 ```text
 app/build/outputs/apk/debug/app-debug.apk
@@ -36,7 +37,31 @@ Per installarlo su un device collegato:
 
 ## Build release
 
-Per generare una build release non firmata:
+La release usa una firma locale opzionale. Il repository legge i valori da uno di questi punti:
+
+1. `keystore.properties` nella root del progetto
+2. variabili ambiente con gli stessi nomi
+
+Chiavi richieste:
+
+```properties
+RELEASE_STORE_FILE=/percorso/al/keystore.jks
+RELEASE_STORE_PASSWORD=...
+RELEASE_KEY_ALIAS=...
+RELEASE_KEY_PASSWORD=...
+```
+
+Nel repository trovi un template sicuro da copiare:
+
+```text
+keystore.properties.example
+```
+
+Il file reale `keystore.properties` e ignorato da Git.
+
+## Generare una release firmata
+
+Una volta creato `keystore.properties` e il keystore locale:
 
 ```bash
 ./gradlew assembleRelease
@@ -45,52 +70,52 @@ Per generare una build release non firmata:
 Output atteso:
 
 ```text
+app/build/outputs/apk/release/app-release.apk
+```
+
+Se la configurazione di signing manca o punta a un file inesistente, Gradle torna a produrre una release non firmata:
+
+```text
 app/build/outputs/apk/release/app-release-unsigned.apk
 ```
 
-Nel repository attuale non c'e ancora una configurazione di signing in `app/build.gradle.kts`, quindi la release generata da Gradle non e pronta per distribuzione diretta.
+## Creare il keystore una volta sola
 
-## APK firmato
+Esempio pratico:
 
-Per distribuire davvero l'app serve aggiungere:
-
-1. un keystore
-2. una `signingConfig`
-3. credenziali non versionate
-
-Schema tipico:
-
-```kotlin
-android {
-    signingConfigs {
-        create("release") {
-            storeFile = file("release.keystore")
-            storePassword = providers.gradleProperty("RELEASE_STORE_PASSWORD").get()
-            keyAlias = providers.gradleProperty("RELEASE_KEY_ALIAS").get()
-            keyPassword = providers.gradleProperty("RELEASE_KEY_PASSWORD").get()
-        }
-    }
-
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("release")
-        }
-    }
-}
+```bash
+keytool -genkeypair \
+  -keystore ~/.android/cheureele-release.jks \
+  -alias cheureele \
+  -storetype PKCS12 \
+  -keyalg RSA \
+  -keysize 4096 \
+  -validity 3650
 ```
 
-Le password non vanno committate: meglio `~/.gradle/gradle.properties`, variabili d'ambiente o un file locale escluso da Git.
+Poi compila `keystore.properties` con il path e le password reali.
 
-## Verifiche consigliate prima di usare un APK
+## Installazione su telefono
+
+Debug:
+
+```bash
+./gradlew installDebug
+```
+
+Release:
+
+```bash
+adb install -r app/build/outputs/apk/release/app-release.apk
+```
+
+Nota pratica: se sul telefono hai gia la build `debug`, una `release` firmata con un certificato diverso non la puo aggiornare sopra. In quel caso devi prima disinstallare la versione esistente oppure installare la stessa variante firmata con la stessa chiave.
+
+## Verifiche consigliate
 
 ```bash
 ./gradlew test
 ./gradlew assembleDebug
-```
-
-Se vuoi preparare una release piu seria, aggiungi anche:
-
-```bash
 ./gradlew assembleRelease
 ```
 
@@ -105,7 +130,10 @@ Se vuoi preparare una release piu seria, aggiungi anche:
 
 - fai `chmod +x gradlew`
 
-`assembleRelease` produce un APK non installabile come release finale
+`INSTALL_PARSE_FAILED_NO_CERTIFICATES`
 
-- manca la firma
-- va aggiunta una `signingConfig`
+- stai provando a installare un APK release non firmato
+
+`INSTALL_FAILED_UPDATE_INCOMPATIBLE`
+
+- sul telefono c'e gia la stessa app firmata con una chiave diversa
