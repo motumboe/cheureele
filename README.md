@@ -48,6 +48,8 @@ Installazione rapida su device collegato:
 
     ./gradlew installDebug
 
+La build `debug` usa il package `com.example.cheureele.debug`, quindi puo convivere sul telefono con la `release`.
+
 Build release firmata, se hai configurato `keystore.properties` locale o le variabili ambiente di signing:
 
     ./gradlew assembleRelease

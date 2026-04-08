@@ -4,13 +4,13 @@ Backlog tecnico emerso dalla review del progetto `CheUreEle`.
 
 ## Priorita alta
 
-- [ ] Rimuovere `android.permission.BIND_APPWIDGET` dal manifest.
+- [x] Rimuovere `android.permission.BIND_APPWIDGET` dal manifest.
   Motivo: e una permission protetta riservata alle system app e oggi blocca `lintDebug`.
 
-- [ ] Separare `debug` e `release` con package installabili in parallelo.
+- [x] Separare `debug` e `release` con package installabili in parallelo.
   Motivo: con lo stesso `applicationId` le due varianti entrano in conflitto e la `release` non si installa sopra la `debug` firmata con chiave diversa.
 
-- [ ] Far fallire la build `release` quando la signing config manca o e incompleta.
+- [x] Far fallire la build `release` quando la signing config manca o e incompleta.
   Motivo: la generazione silenziosa di un APK unsigned porta a una build apparentemente riuscita ma non installabile.
 
 - [ ] Rivalutare il refresh al minuto del widget sotto Doze e device idle.

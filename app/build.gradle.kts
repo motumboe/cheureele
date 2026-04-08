@@ -1,3 +1,4 @@
+import org.gradle.api.GradleException
 import java.util.Properties
 
 plugins {
@@ -24,11 +25,42 @@ val releaseStoreFile =
 val releaseStorePassword = getReleaseSigningValue("RELEASE_STORE_PASSWORD")
 val releaseKeyAlias = getReleaseSigningValue("RELEASE_KEY_ALIAS")
 val releaseKeyPassword = getReleaseSigningValue("RELEASE_KEY_PASSWORD")
+val releaseSigningProblems = buildList {
+    when {
+        releaseStoreFilePath.isNullOrBlank() -> add("RELEASE_STORE_FILE mancante")
+        releaseStoreFile?.exists() != true -> add("RELEASE_STORE_FILE punta a un file inesistente")
+    }
+
+    if (releaseStorePassword.isNullOrBlank()) add("RELEASE_STORE_PASSWORD mancante")
+    if (releaseKeyAlias.isNullOrBlank()) add("RELEASE_KEY_ALIAS mancante")
+    if (releaseKeyPassword.isNullOrBlank()) add("RELEASE_KEY_PASSWORD mancante")
+}
 val hasReleaseSigning =
-    releaseStoreFile?.exists() == true &&
-        !releaseStorePassword.isNullOrBlank() &&
-        !releaseKeyAlias.isNullOrBlank() &&
-        !releaseKeyPassword.isNullOrBlank()
+    releaseSigningProblems.isEmpty()
+
+fun requiresSignedReleaseArtifact(taskPath: String): Boolean {
+    val taskName = taskPath.substringAfterLast(':')
+    return taskName in setOf(
+        "assemble",
+        "assembleRelease",
+        "bundle",
+        "bundleRelease",
+        "installRelease",
+        "packageRelease"
+    )
+}
+
+gradle.taskGraph.whenReady {
+    val wantsSignedReleaseArtifact = allTasks.any { requiresSignedReleaseArtifact(it.path) }
+
+    if (wantsSignedReleaseArtifact && !hasReleaseSigning) {
+        throw GradleException(
+            "Signing release mancante o incompleta: " +
+                releaseSigningProblems.joinToString(", ") +
+                ". Copia keystore.properties.example in keystore.properties e inserisci i valori reali."
+        )
+    }
+}
 
 android {
     namespace = "com.example.cheureele"
@@ -59,6 +91,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
+
         release {
             if (hasReleaseSigning) {
                 signingConfig = signingConfigs.getByName("release")

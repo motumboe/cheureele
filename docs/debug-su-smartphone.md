@@ -52,6 +52,8 @@ Da terminale:
 ./gradlew installDebug
 ```
 
+La variante `debug` viene installata come package `com.example.cheureele.debug`, quindi puo convivere con la `release` sullo stesso telefono.
+
 In alternativa, da Android Studio:
 
 1. apri il progetto
@@ -78,7 +80,7 @@ Logcat filtrato dai tag gia presenti:
 adb logcat | grep -E 'widget'
 ```
 
-Se usi Android Studio, apri `Logcat` e filtra per package `com.example.cheureele`.
+Se usi Android Studio, apri `Logcat` e filtra per package `com.example.cheureele.debug` mentre stai provando la build debug.
 
 ## Controlli utili per widget e allarmi
 

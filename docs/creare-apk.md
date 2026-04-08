@@ -37,7 +37,7 @@ Per installarlo su un device collegato:
 
 ## Build release
 
-La release usa una firma locale opzionale. Il repository legge i valori da uno di questi punti:
+La release usa una firma locale obbligatoria. Il repository legge i valori da uno di questi punti:
 
 1. `keystore.properties` nella root del progetto
 2. variabili ambiente con gli stessi nomi
@@ -73,11 +73,8 @@ Output atteso:
 app/build/outputs/apk/release/app-release.apk
 ```
 
-Se la configurazione di signing manca o punta a un file inesistente, Gradle torna a produrre una release non firmata:
-
-```text
-app/build/outputs/apk/release/app-release-unsigned.apk
-```
+Se la configurazione di signing manca o punta a un file inesistente,
+la build `assembleRelease` fallisce subito con un errore esplicito.
 
 ## Creare il keystore una volta sola
 
@@ -103,6 +100,8 @@ Debug:
 ./gradlew installDebug
 ```
 
+La build `debug` usa il package `com.example.cheureele.debug`, quindi puo convivere con la `release`.
+
 Release:
 
 ```bash
@@ -110,6 +109,12 @@ adb install -r app/build/outputs/apk/release/app-release.apk
 ```
 
 Nota pratica: se sul telefono hai gia la build `debug`, una `release` firmata con un certificato diverso non la puo aggiornare sopra. In quel caso devi prima disinstallare la versione esistente oppure installare la stessa variante firmata con la stessa chiave.
+
+Se arrivi da versioni vecchie del progetto dove anche la `debug` usava `com.example.cheureele`, fai una sola volta:
+
+```bash
+adb uninstall com.example.cheureele
+```
 
 ## Verifiche consigliate
 
@@ -132,8 +137,9 @@ Nota pratica: se sul telefono hai gia la build `debug`, una `release` firmata co
 
 `INSTALL_PARSE_FAILED_NO_CERTIFICATES`
 
-- stai provando a installare un APK release non firmato
+- manca o e errata la signing config della release
 
 `INSTALL_FAILED_UPDATE_INCOMPATIBLE`
 
 - sul telefono c'e gia la stessa app firmata con una chiave diversa
+- se provieni da vecchie build debug senza suffix, disinstalla una volta `com.example.cheureele`
