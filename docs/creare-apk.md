@@ -108,6 +108,22 @@ Release:
 adb install -r app/build/outputs/apk/release/app-release.apk
 ```
 
+## Preparare asset con nome da distribuzione
+
+Per ottenere una copia dell'APK con nome adatto alla condivisione o a GitHub Releases:
+
+```bash
+./gradlew stageReleaseApk
+./gradlew stageDebugApk
+```
+
+Output:
+
+```text
+app/build/outputs/github-release/CheUreEle-v1.1.0.apk
+app/build/outputs/github-release/CheUreEle-v1.1.0-debug.apk
+```
+
 Nota pratica: se sul telefono hai gia la build `debug`, una `release` firmata con un certificato diverso non la puo aggiornare sopra. In quel caso devi prima disinstallare la versione esistente oppure installare la stessa variante firmata con la stessa chiave.
 
 Se arrivi da versioni vecchie del progetto dove anche la `debug` usava `com.example.cheureele`, fai una sola volta:

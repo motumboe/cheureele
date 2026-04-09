@@ -62,6 +62,9 @@ gradle.taskGraph.whenReady {
     }
 }
 
+val appVersionCode = providers.gradleProperty("APP_VERSION_CODE").get().toInt()
+val appVersionName = providers.gradleProperty("APP_VERSION_NAME").get()
+
 android {
     namespace = "com.example.cheureele"
     compileSdk = 34
@@ -70,8 +73,8 @@ android {
         applicationId = "com.example.cheureele"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -145,4 +148,20 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+val githubReleaseDir = layout.buildDirectory.dir("outputs/github-release")
+
+tasks.register<Copy>("stageReleaseApk") {
+    dependsOn("assembleRelease")
+    from(layout.buildDirectory.file("outputs/apk/release/app-release.apk"))
+    into(githubReleaseDir)
+    rename { "CheUreEle-v$appVersionName.apk" }
+}
+
+tasks.register<Copy>("stageDebugApk") {
+    dependsOn("assembleDebug")
+    from(layout.buildDirectory.file("outputs/apk/debug/app-debug.apk"))
+    into(githubReleaseDir)
+    rename { "CheUreEle-v$appVersionName-debug.apk" }
 }

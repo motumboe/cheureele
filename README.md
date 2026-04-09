@@ -50,6 +50,11 @@ Installazione rapida su device collegato:
 
 La build `debug` usa il package `com.example.cheureele.debug`, quindi puo convivere sul telefono con la `release`.
 
+Versioning Android:
+
+    APP_VERSION_NAME=1.1.0
+    APP_VERSION_CODE=2
+
 Build release firmata, se hai configurato `keystore.properties` locale o le variabili ambiente di signing:
 
     ./gradlew assembleRelease
@@ -73,6 +78,7 @@ Build release firmata, se hai configurato `keystore.properties` locale o le vari
 
 - docs/debug-su-smartphone.md
 - docs/creare-apk.md
+- docs/github-releases.md
 
 ## Stato attuale
 
