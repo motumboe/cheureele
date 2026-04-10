@@ -89,6 +89,17 @@ gh release create v1.1.0 \
   --notes "..."
 ```
 
+Se il tag esiste gia e la release esiste gia, carica o aggiorna gli asset con:
+
+```bash
+gh release upload v1.1.0 \
+  app/build/outputs/github-release/CheUreEle-v1.1.0.apk \
+  app/build/outputs/github-release/CheUreEle-latest.apk \
+  --clobber
+```
+
+`--clobber` sovrascrive un asset con lo stesso nome gia presente nella release.
+
 ## Pre-release
 
 Per build non definitive:
