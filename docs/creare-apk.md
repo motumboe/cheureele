@@ -113,7 +113,7 @@ adb install -r app/build/outputs/apk/release/app-release.apk
 Per ottenere una copia dell'APK con nome adatto alla condivisione o a GitHub Releases:
 
 ```bash
-./gradlew stageReleaseApk
+./gradlew stageReleaseAssets
 ./gradlew stageDebugApk
 ```
 
@@ -121,6 +121,7 @@ Output:
 
 ```text
 app/build/outputs/github-release/CheUreEle-v1.1.0.apk
+app/build/outputs/github-release/CheUreEle-latest.apk
 app/build/outputs/github-release/CheUreEle-v1.1.0-debug.apk
 ```
 

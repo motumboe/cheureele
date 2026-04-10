@@ -39,13 +39,14 @@ Gli APK standard restano quelli di Gradle:
 Per preparare gli asset con nome adatto alla distribuzione:
 
 ```bash
-./gradlew stageReleaseApk
+./gradlew stageReleaseAssets
 ./gradlew stageDebugApk
 ```
 
 Output:
 
 - `app/build/outputs/github-release/CheUreEle-v1.1.0.apk`
+- `app/build/outputs/github-release/CheUreEle-latest.apk`
 - `app/build/outputs/github-release/CheUreEle-v1.1.0-debug.apk`
 
 ## Procedura di rilascio
@@ -60,7 +61,7 @@ Output:
 3. genera e prepara l'APK da pubblicare:
 
 ```bash
-./gradlew stageReleaseApk
+./gradlew stageReleaseAssets
 ```
 
 4. crea un tag Git:
@@ -71,7 +72,9 @@ git push origin v1.1.0
 ```
 
 5. crea la GitHub Release con titolo `v1.1.0`
-6. allega l'APK generato in `app/build/outputs/github-release/`
+6. allega almeno questi due asset generati in `app/build/outputs/github-release/`:
+   - `CheUreEle-v1.1.0.apk`
+   - `CheUreEle-latest.apk`
 7. inserisci note brevi con cambiamenti e bugfix principali
 
 ## Uso con GitHub CLI
@@ -79,7 +82,11 @@ git push origin v1.1.0
 Se usi `gh`, il flusso minimo e:
 
 ```bash
-gh release create v1.1.0 app/build/outputs/github-release/CheUreEle-v1.1.0.apk --title "v1.1.0" --notes "..."
+gh release create v1.1.0 \
+  app/build/outputs/github-release/CheUreEle-v1.1.0.apk \
+  app/build/outputs/github-release/CheUreEle-latest.apk \
+  --title "v1.1.0" \
+  --notes "..."
 ```
 
 ## Pre-release

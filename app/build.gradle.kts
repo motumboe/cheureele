@@ -159,9 +159,20 @@ tasks.register<Copy>("stageReleaseApk") {
     rename { "CheUreEle-v$appVersionName.apk" }
 }
 
+tasks.register<Copy>("stageLatestReleaseApk") {
+    dependsOn("assembleRelease")
+    from(layout.buildDirectory.file("outputs/apk/release/app-release.apk"))
+    into(githubReleaseDir)
+    rename { "CheUreEle-latest.apk" }
+}
+
 tasks.register<Copy>("stageDebugApk") {
     dependsOn("assembleDebug")
     from(layout.buildDirectory.file("outputs/apk/debug/app-debug.apk"))
     into(githubReleaseDir)
     rename { "CheUreEle-v$appVersionName-debug.apk" }
+}
+
+tasks.register("stageReleaseAssets") {
+    dependsOn("stageReleaseApk", "stageLatestReleaseApk")
 }
