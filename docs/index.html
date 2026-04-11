@@ -126,7 +126,6 @@
       font-size: clamp(20px, 3.6vw, 28px);
       line-height: 1.05;
       font-weight: 700;
-      text-transform: uppercase;
     }
 
     .meta {
@@ -233,8 +232,8 @@
       <div class="grid">
         <section class="card">
           <div class="widget" aria-hidden="true">
-            <div class="clock">11:05</div>
-            <div class="phrase">UNDAS E ZINQ</div>
+            <div class="clock" id="widget-clock">11:05</div>
+            <div class="phrase" id="widget-phrase">le öndès e un quart</div>
           </div>
           <div class="actions">
             <a class="button button-primary" id="apk-link" href="https://github.com/motumboe/cheureele/releases/latest">Scarica APK</a>
@@ -267,6 +266,69 @@
     const releaseLink = document.getElementById("release-link");
     const tagLabel = document.getElementById("tag-label");
     const statusText = document.getElementById("status");
+    const widgetClock = document.getElementById("widget-clock");
+    const widgetPhrase = document.getElementById("widget-phrase");
+
+    const secondsPerQuarter = 15 * 60;
+    const quarterRoundingOffsetSeconds = secondsPerQuarter / 2;
+    const dialectQuarterTexts = [
+      "mezanòt", "mezanòt e un quart", "mezanòt e meza", "un quart a un bòt",
+      "un bòt", "un bòt e un quart", "un bòt e mès", "un quart a le dò",
+      "le dò", "le dò e un quart", "le dò e meza", "un quart a le trè",
+      "le trè", "le trè e un quart", "le trè e meza", "un quart a le quater",
+      "le quater", "le quater e un quart", "le quater e meza", "un quart a le sic",
+      "le sic", "le sic e un quart", "le sic e meza", "un quart a le sés",
+      "le sés", "le sés e un quart", "le sés e meza", "un quart a le sèt",
+      "le sèt", "le sèt e un quart", "le sèt e meza", "un quart a le òt",
+      "le òt", "le òt e un quart", "le òt e meza", "un quart a le nöf",
+      "le nöf", "le nöf e un quart", "le nöf e meza", "un quart a le dés",
+      "le dés", "le dés e un quart", "le dés e meza", "un quart a le öndès",
+      "le öndès", "le öndès e un quart", "le öndès e meza", "un quart a mezdé",
+      "mezdé", "mezdé e un quart", "mezdé e mès", "un quart a un bòt",
+      "un bòt", "un bòt e un quart", "un bòt e mès", "un quart a le dò",
+      "le dò", "le dò e un quart", "le dò e meza", "un quart a le trè",
+      "le trè", "le trè e un quart", "le trè e meza", "un quart a le quater",
+      "le quater", "le quater e un quart", "le quater e meza", "un quart a le sic",
+      "le sic", "le sic e un quart", "le sic e meza", "un quart a le sés",
+      "le sés", "le sés e un quart", "le sés e meza", "un quart a le sèt",
+      "le sèt", "le sèt e un quart", "le sèt e meza", "un quart a le òt",
+      "le òt", "le òt e un quart", "le òt e meza", "un quart a le nöf",
+      "le nöf", "le nöf e un quart", "le nöf e meza", "un quart a le dés",
+      "le dés", "le dés e un quart", "le dés e meza", "un quart a le öndès",
+      "le öndès", "le öndès e un quart", "le öndès e meza", "un quart a mezanòt",
+      "mezanòt"
+    ];
+
+    function formatNumericTime(date) {
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      return `${hours}:${minutes}`;
+    }
+
+    function formatDialectTime(date) {
+      const secondsFromMidnight =
+        (date.getHours() * 60 * 60) +
+        (date.getMinutes() * 60) +
+        date.getSeconds();
+      const roundedQuarterIndex = Math.floor(
+        (secondsFromMidnight + quarterRoundingOffsetSeconds) / secondsPerQuarter
+      );
+      return dialectQuarterTexts[roundedQuarterIndex % dialectQuarterTexts.length];
+    }
+
+    function renderWidgetPreview(date = new Date()) {
+      widgetClock.textContent = formatNumericTime(date);
+      widgetPhrase.textContent = formatDialectTime(date);
+    }
+
+    function scheduleWidgetPreviewRefresh() {
+      renderWidgetPreview();
+      const now = new Date();
+      const nextMinuteDelay =
+        ((60 - now.getSeconds()) * 1000) - now.getMilliseconds() + 20;
+
+      window.setTimeout(scheduleWidgetPreviewRefresh, nextMinuteDelay);
+    }
 
     async function hydrateLatestRelease() {
       try {
@@ -300,6 +362,7 @@
       }
     }
 
+    scheduleWidgetPreviewRefresh();
     hydrateLatestRelease();
   </script>
 </body>
