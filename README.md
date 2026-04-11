@@ -80,6 +80,14 @@ Build release firmata, se hai configurato `keystore.properties` locale o le vari
 - docs/creare-apk.md
 - docs/github-releases.md
 
+## Download
+
+Per condividere la build pubblica senza rincorrere il link del singolo APK a ogni versione, il riferimento consigliato nel `README` e la pagina dell'ultima release:
+
+- `https://github.com/motumboe/cheureele/releases/latest`
+
+Da li chi scarica trova sempre gli asset aggiornati della release piu recente.
+
 ## Stato attuale
 
 - Il widget mostra ora numerica e ora testuale.

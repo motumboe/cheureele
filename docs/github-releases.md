@@ -4,12 +4,37 @@ Questa guida descrive un flusso leggero e ripetibile per distribuire `CheUreEle`
 
 ## Strategia consigliata
 
-- tieni il repository del codice privato, se vuoi
+- se vuoi condividere gli APK senza login GitHub, rendi pubblico il repository
 - usa GitHub Releases come canale di distribuzione dell'APK
 - allega sempre solo la build `release`
 - conserva sempre lo stesso keystore, altrimenti gli aggiornamenti smettono di funzionare
 
 Se il repository e privato, gli asset delle release sono comodi solo per chi ha accesso al repository. Per amici non tecnici, la soluzione piu semplice e usare un repository pubblico separato solo per le release, oppure condividere direttamente l'APK con un link stabile.
+
+## Link consigliati
+
+Per il `README` e per la condivisione generale, non e una buona pratica aggiornare ogni volta un link puntato al singolo asset versionato.
+
+Il riferimento a manutenzione minima e:
+
+- pagina ultima release: `https://github.com/motumboe/cheureele/releases/latest`
+
+Questo URL resta stabile e reindirizza sempre all'ultima release pubblicata.
+
+Per il download diretto di un singolo APK, invece, GitHub usa URL che includono il tag della release, per esempio:
+
+- `https://github.com/motumboe/cheureele/releases/download/v1.1.0/CheUreEle-v1.1.0.apk`
+- `https://github.com/motumboe/cheureele/releases/download/v1.1.0/CheUreEle-latest.apk`
+
+Anche se il file si chiama `CheUreEle-latest.apk`, l'URL cambia comunque a ogni tag. Con GitHub Releases da solo non hai quindi un URL diretto all'APK davvero immutabile.
+
+Se vuoi il minimo impatto possibile:
+
+- nel `README` usa sempre `releases/latest`
+- nella release allega sia l'APK versionato sia `CheUreEle-latest.apk`
+- non aggiornare il `README` a ogni nuova versione
+
+Se un domani vorrai un link diretto all'APK davvero stabile, serve un livello in piu, per esempio GitHub Pages con redirect o un dominio/file hosting esterno.
 
 ## Versioning consigliato
 
@@ -76,6 +101,10 @@ git push origin v1.1.0
    - `CheUreEle-v1.1.0.apk`
    - `CheUreEle-latest.apk`
 7. inserisci note brevi con cambiamenti e bugfix principali
+
+Se il repository e pubblico, i tuoi amici possono aprire senza login:
+
+- pagina release corrente: `https://github.com/motumboe/cheureele/releases/latest`
 
 ## Uso con GitHub CLI
 
