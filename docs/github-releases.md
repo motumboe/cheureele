@@ -38,13 +38,17 @@ Se un domani vorrai un link diretto all'APK davvero stabile, serve un livello in
 
 ## Evoluzione futura: GitHub Pages
 
-Se vorrai un URL pubblico e stabile che non cambi a ogni tag, il passo naturale successivo e GitHub Pages.
+Per avere un URL pubblico e stabile che non cambi a ogni tag, il passo naturale successivo e GitHub Pages.
 
 Approccio consigliato:
 
-- pubblica una piccola pagina `download` su GitHub Pages
+- pubblica una piccola pagina su GitHub Pages a partire dalla cartella `docs`
 - quella pagina espone un pulsante o un redirect verso l'asset dell'ultima release
 - nel `README` e nei messaggi agli amici condividi il link GitHub Pages invece del link diretto all'asset
+
+In questo repository la pagina prevista e:
+
+- `https://motumboe.github.io/cheureele/`
 
 Vantaggi:
 
@@ -55,6 +59,7 @@ Vantaggi:
 Limite:
 
 - GitHub Pages da solo non rende "magico" l'URL dell'APK; ti da pero un entrypoint stabile e sotto il tuo controllo
+- il download diretto dell'APK viene comunque risolto leggendo l'ultima release pubblica
 
 ## Versioning consigliato
 

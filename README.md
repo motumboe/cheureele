@@ -82,11 +82,13 @@ Build release firmata, se hai configurato `keystore.properties` locale o le vari
 
 ## Download
 
-Per condividere la build pubblica senza rincorrere il link del singolo APK a ogni versione, il riferimento consigliato nel `README` e la pagina dell'ultima release:
+Per condividere la build pubblica con un URL stabile, il riferimento consigliato e la pagina GitHub Pages del progetto:
+
+- `https://motumboe.github.io/cheureele/`
+
+Come fallback resta sempre valida anche la pagina dell'ultima release:
 
 - `https://github.com/motumboe/cheureele/releases/latest`
-
-Da li chi scarica trova sempre gli asset aggiornati della release piu recente.
 
 ## Stato attuale
 
