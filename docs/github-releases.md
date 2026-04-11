@@ -36,6 +36,26 @@ Se vuoi il minimo impatto possibile:
 
 Se un domani vorrai un link diretto all'APK davvero stabile, serve un livello in piu, per esempio GitHub Pages con redirect o un dominio/file hosting esterno.
 
+## Evoluzione futura: GitHub Pages
+
+Se vorrai un URL pubblico e stabile che non cambi a ogni tag, il passo naturale successivo e GitHub Pages.
+
+Approccio consigliato:
+
+- pubblica una piccola pagina `download` su GitHub Pages
+- quella pagina espone un pulsante o un redirect verso l'asset dell'ultima release
+- nel `README` e nei messaggi agli amici condividi il link GitHub Pages invece del link diretto all'asset
+
+Vantaggi:
+
+- URL pubblico stabile
+- nessun aggiornamento del `README` a ogni release
+- puoi aggiungere istruzioni installazione, changelog breve e note di compatibilita
+
+Limite:
+
+- GitHub Pages da solo non rende "magico" l'URL dell'APK; ti da pero un entrypoint stabile e sotto il tuo controllo
+
 ## Versioning consigliato
 
 Nel progetto usiamo due valori distinti:
